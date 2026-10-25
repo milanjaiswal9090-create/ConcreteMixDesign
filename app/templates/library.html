@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}100 Solved Problems Library — ConcreteMix AI{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <div>
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">100 Solved Problems Knowledge Base</h1>
+            <p class="text-sm text-slate-500 mt-1">Benchmark worked examples proportioned per IS 10262:2019 and checked against IS 456:2000 Table 5.</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <span class="text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1.5 rounded-lg font-semibold">
+                100 / 100 Verified Problems
+            </span>
+        </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm mb-8 grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Search Problem Statement</label>
+            <input type="text" id="libSearch" class="w-full text-xs rounded-lg border border-slate-300 p-2.5" placeholder="e.g. coastal column, fly ash, M40...">
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Concrete Grade</label>
+            <select id="filterGrade" class="w-full text-xs rounded-lg border border-slate-300 p-2.5">
+                <option value="">All Grades</option>
+                <option value="M15">M15</option>
+                <option value="M20">M20</option>
+                <option value="M25">M25</option>
+                <option value="M30">M30</option>
+                <option value="M35">M35</option>
+                <option value="M40">M40</option>
+                <option value="M45">M45</option>
+                <option value="M50">M50</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Exposure Condition</label>
+            <select id="filterExposure" class="w-full text-xs rounded-lg border border-slate-300 p-2.5">
+                <option value="">All Exposures</option>
+                <option value="mild">Mild</option>
+                <option value="moderate">Moderate</option>
+                <option value="severe">Severe</option>
+                <option value="very severe">Very Severe</option>
+                <option value="extreme">Extreme</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Problem Group</label>
+            <select id="filterGroup" class="w-full text-xs rounded-lg border border-slate-300 p-2.5">
+                <option value="">All Problem Types</option>
+                <option value="A_conventional">Group A: Conventional (30)</option>
+                <option value="B_exposure_durability">Group B: Severe Exposure (15)</option>
+                <option value="C_pumped_workability">Group C: Pumped Mixes (15)</option>
+                <option value="D_fly_ash_ggbs_blends">Group D: SCM Blends (15)</option>
+                <option value="E_aggregate_zones">Group E: Grading Zones I-IV (15)</option>
+                <option value="F_advanced_special">Group F: High Strength / SCC (10)</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Examples Grid Container -->
+    <div id="examplesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="col-span-full py-12 text-center text-slate-400">Loading benchmark examples...</div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", async function() {
+    const grid = document.getElementById("examplesGrid");
+    const search = document.getElementById("libSearch");
+    const fGrade = document.getElementById("filterGrade");
+    const fExposure = document.getElementById("filterExposure");
+    const fGroup = document.getElementById("filterGroup");
+
+    async function loadExamples() {
+        const params = new URLSearchParams();
+        if (fGrade.value) params.append("grade", fGrade.value);
+        if (fExposure.value) params.append("exposure", fExposure.value);
+        if (fGroup.value) params.append("group", fGroup.value);
+        params.append("limit", "100");
+
+        try {
+            const res = await fetch(`/api/examples?${params.toString()}`);
+            const data = await res.json();
+            renderList(data.results);
+        } catch (err) {
+            grid.innerHTML = `<div class="col-span-full text-center text-red-500 text-sm">Failed to load examples: ${err.message}</div>`;
+        }
+    }
+
+    function renderList(list) {
+        if (!list || list.length === 0) {
+            grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 text-sm">No benchmark problems matched your filter criteria.</div>`;
+            return;
+        }
+
+        grid.innerHTML = list.map(item => `
+            <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-xs font-mono font-bold text-teal-700 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded">${item.external_id}</span>
+                        <span class="text-xs font-bold text-slate-800">${item.grade} (${item.exposure})</span>
+                    </div>
+                    <p class="text-xs text-slate-600 line-clamp-3 leading-relaxed mt-2">${item.problem_statement}</p>
+                </div>
+                <div class="border-t border-slate-100 pt-3 mt-4">
+                    <div class="grid grid-cols-3 gap-1 text-center text-[11px] text-slate-600 font-mono mb-3">
+                        <div class="bg-slate-50 p-1.5 rounded">
+                            <div class="text-[9px] uppercase text-slate-400">Cement</div>
+                            <div class="font-bold text-slate-800">${item.mix_per_m3?.cement || '-'} kg</div>
+                        </div>
+                        <div class="bg-slate-50 p-1.5 rounded">
+                            <div class="text-[9px] uppercase text-slate-400">w/c</div>
+                            <div class="font-bold text-slate-800">${item.mix_per_m3?.w_cm || '-'}</div>
+                        </div>
+                        <div class="bg-slate-50 p-1.5 rounded">
+                            <div class="text-[9px] uppercase text-slate-400">Slump</div>
+                            <div class="font-bold text-slate-800">${item.slump} mm</div>
+                        </div>
+                    </div>
+                    <a href="/examples/${item.external_id}" class="block text-center text-xs font-semibold text-teal-700 hover:text-teal-800 bg-teal-50 hover:bg-teal-100/70 border border-teal-200 py-2 rounded-xl transition">
+                        View Complete Calculation Audit &rarr;
+                    </a>
+                </div>
+            </div>
+        `).join("");
+    }
+
+    [fGrade, fExposure, fGroup].forEach(el => el.addEventListener("change", loadExamples));
+    
+    // Simple client search filter
+    search.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase();
+        const cards = grid.querySelectorAll(".bg-white");
+        cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            card.style.display = text.includes(query) ? "" : "none";
+        });
+    });
+
+    loadExamples();
+});
+</script>
+{% endblock %}

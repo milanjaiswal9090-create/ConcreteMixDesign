@@ -1,0 +1,80 @@
+/* Custom styling for ConcreteMix AI — Engineering SaaS Aesthetic */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+    --brand-teal: #0F766E;
+    --brand-teal-hover: #0D6B63;
+    --brand-bg: #FAFAF8;
+    --brand-card: #FFFFFF;
+    --border-color: #E2E8F0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--brand-bg);
+    color: #1E293B;
+}
+
+code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Custom selection */
+::selection {
+    background-color: #0F766E;
+    color: #ffffff;
+}
+
+/* Clean UI shadow and card transitions */
+.eng-card {
+    background: #ffffff;
+    border: 1px solid #E2E8F0;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eng-card:hover {
+    border-color: #CBD5E1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* Print styling for design reports */
+@media print {
+    header, footer, nav, button, #liveDetectionBox, .no-print {
+        display: none !important;
+    }
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt;
+    }
+    .lg\:col-span-5 {
+        display: none !important;
+    }
+    .lg\:col-span-7 {
+        width: 100% !important;
+    }
+    .eng-card {
+        border: 1px solid #000000 !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+        margin-bottom: 1.5rem !important;
+    }
+}

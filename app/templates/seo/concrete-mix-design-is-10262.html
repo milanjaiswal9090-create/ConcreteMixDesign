@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Concrete Mix Design as per IS 10262:2019 — Step by Step Procedure{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-8">
+    <div class="border-b border-slate-200 pb-6">
+        <span class="text-xs font-bold uppercase tracking-wider text-teal-700">Educational Guide</span>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight mt-1">IS 10262:2019 Concrete Mix Proportioning Guide</h1>
+        <p class="text-sm text-slate-500 mt-2">A technical walkthrough of India's benchmark standard for proportioning normal and high-strength concrete mixes.</p>
+    </div>
+
+    <div class="prose prose-slate max-w-none text-sm text-slate-700 leading-relaxed space-y-6">
+        <h2 class="text-lg font-bold text-slate-900">1. Introduction to the 2019 Revision</h2>
+        <p>
+            Bureau of Indian Standards published <strong>IS 10262:2019</strong> to supersede the 2009 edition. The revised standard includes provisions for high-strength concrete (M65-M100), self-compacting concrete (SCC), mass concrete, and systematic handling of mineral admixtures (fly ash, GGBS, silica fume, and metakaolin).
+        </p>
+
+        <h2 class="text-lg font-bold text-slate-900">2. Key Steps in the Design Procedure</h2>
+        <ol class="list-decimal pl-5 space-y-2">
+            <li><strong>Design Stipulations:</strong> Establish characteristic compressive strength (\(f_{ck}\)), exposure condition, workability (slump), placing method (pumped vs tremie), and quality control level.</li>
+            <li><strong>Target Mean Strength:</strong> Calculate \(f'_{ck} = \max(f_{ck} + 1.65s, f_{ck} + X)\).</li>
+            <li><strong>Selection of Free Water-Cement Ratio:</strong> Derive preliminary w/c from strength curves and limit according to IS 456 Table 5 durability requirements.</li>
+            <li><strong>Selection of Water Content:</strong> Base water requirement on nominal aggregate size (10, 20, 40 mm) with +3% adjustments per 25 mm slump above 50 mm, and water reduction for chemical admixtures.</li>
+            <li><strong>Calculation of Cementitious Content:</strong> Cementitious = Water / (w/c), verified against IS 456 minimum cement content and 450 kg/m³ maximum limit.</li>
+            <li><strong>Aggregate Proportioning:</strong> Estimate coarse aggregate volume fraction per unit volume of total aggregate based on fine aggregate grading zone (Zones I to IV) and adopted w/c ratio.</li>
+            <li><strong>Absolute Volume Calculations:</strong> Sum component volumes to 1.0 m³ to compute precise batch masses.</li>
+        </ol>
+
+        <div class="p-6 bg-teal-50 rounded-2xl border border-teal-200 my-8">
+            <h3 class="text-sm font-bold text-teal-900">Try IS 10262:2019 in Action</h3>
+            <p class="text-xs text-teal-700 mt-1">Experience deterministic proportioning with automated yield checks on our workbench.</p>
+            <a href="/design" class="mt-4 inline-block px-5 py-2 rounded-xl text-xs font-bold text-white bg-teal-700 hover:bg-teal-800 transition">
+                Open Concrete Workbench &rarr;
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

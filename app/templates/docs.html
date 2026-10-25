@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Documentation & FAQ — ConcreteMix AI{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+    <div>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Documentation & Frequently Asked Questions</h1>
+        <p class="text-sm text-slate-500 mt-2">Guidance on using the platform, input boundaries, and engineering interpretations.</p>
+    </div>
+
+    <!-- FAQ List -->
+    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-8">
+        <div>
+            <h3 class="text-base font-bold text-slate-900 mb-2">Does this mix design platform use an external LLM API?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                <strong>No.</strong> There is zero runtime dependence on external generative LLM APIs (OpenAI, Gemini, Claude, etc.). Parameter parsing uses deterministic regex matchers, RAG retrieval uses hybrid BM25 and local TF-IDF embeddings, and calculations use the verified IS 10262 Python algorithm.
+            </p>
+        </div>
+
+        <div class="border-t border-slate-100 pt-6">
+            <h3 class="text-base font-bold text-slate-900 mb-2">Can calculated proportions be used directly on site?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                No mathematical proportioning algorithm replaces physical laboratory testing. IS 10262:2019 mix designs produce starting target proportions that <strong>must be verified by laboratory trial mixes</strong> to confirm actual workability, 7-day strength, and 28-day compressive strength with locally sourced batch materials.
+            </p>
+        </div>
+
+        <div class="border-t border-slate-100 pt-6">
+            <h3 class="text-base font-bold text-slate-900 mb-2">How are field moisture and water absorption handled?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                Mix designs calculate bone-dry or saturated-surface-dry (SSD) quantities. When aggregates in the yard possess free surface moisture or water absorption deficiencies, the mixing water and aggregate batch weights are automatically adjusted in the "Site Adjusted Field Batching" summary.
+            </p>
+        </div>
+
+        <div class="border-t border-slate-100 pt-6">
+            <h3 class="text-base font-bold text-slate-900 mb-2">What aggregate sizes and grading zones are supported?</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+                Standard nominal maximum aggregate sizes of 10 mm, 20 mm, and 40 mm are supported. Fine aggregate grading Zones I, II, III, and IV (as per IS 383:2016) are fully mapped to coarse aggregate volume fractions.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

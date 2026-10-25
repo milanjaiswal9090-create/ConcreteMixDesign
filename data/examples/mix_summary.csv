@@ -1,0 +1,101 @@
+id,group,grade,exposure,member,max_size_mm,slump_mm,zone,cement_grade,scm,sp_pct,target_MPa,w_cm,cement,scm_kg,water,fine_agg_ssd,coarse_agg_ssd,admixture,status,all_checks_pass
+P001,A_conventional,M25,mild,RCC,40,100,III,53,,0,31.6,0.55,318.0,0,174.9,531.0,1395.0,0.0,computed_checked_against_code_rules,True
+P002,A_conventional,M25,moderate,PCC,20,75,III,43,,0,31.6,0.6,319.0,0,191.6,710.0,1184.0,0.0,computed_checked_against_code_rules,True
+P003,A_conventional,M25,moderate,RCC,40,75,II,43,,0,31.6,0.5,340.0,0,170.0,545.0,1394.0,0.0,computed_checked_against_code_rules,True
+P004,A_conventional,M20,moderate,PCC,20,50,III,43,,0,26.6,0.6,310.0,0,186,705.0,1181.0,0.0,computed_checked_against_code_rules,True
+P005,A_conventional,M40,moderate,RCC,20,75,III,53,,0,48.25,0.5,383.0,0,191.6,640.0,1169.0,0.0,computed_checked_against_code_rules,True
+P006,A_conventional,M25,moderate,PCC,40,75,II,53,,0,31.6,0.6,283.0,0,170.0,604.0,1384.0,0.0,computed_checked_against_code_rules,True
+P007,A_conventional,M35,mild,RCC,20,75,I,53,,0,43.25,0.55,348.0,0,191.6,736.0,1108.0,0.0,computed_checked_against_code_rules,True
+P008,A_conventional,M30,moderate,RCC,20,25,II,43,,0,38.25,0.5,372.0,0,186,687.0,1180.0,0.0,computed_checked_against_code_rules,True
+P009,A_conventional,M35,moderate,RCC,20,75,II,53,,0,43.25,0.5,383.0,0,191.6,689.0,1153.0,0.0,computed_checked_against_code_rules,True
+P010,A_conventional,M40,mild,RCC,20,100,III,53,,0,48.25,0.5,394.0,0,197.2,635.0,1154.0,0.0,computed_checked_against_code_rules,True
+P011,A_conventional,M20,mild,RCC,20,75,II,53,,0,26.6,0.55,348.0,0,191.6,716.0,1150.0,0.0,computed_checked_against_code_rules,True
+P012,A_conventional,M40,moderate,RCC,20,25,II,53,,0,48.25,0.5,372.0,0,186,691.0,1148.0,0.0,computed_checked_against_code_rules,True
+P013,A_conventional,M25,mild,RCC,20,50,II,53,,0,31.6,0.55,338.0,0,186,725.0,1160.0,0.0,computed_checked_against_code_rules,True
+P014,A_conventional,M30,mild,RCC,20,100,II,43,,0,38.25,0.53,372.0,0,197.2,688.0,1131.0,0.0,computed_checked_against_code_rules,True
+P015,A_conventional,M35,mild,RCC,20,100,IV,53,,0,43.25,0.55,358.0,0,197.2,625.0,1192.0,0.0,computed_checked_against_code_rules,True
+P016,A_conventional,M40,mild,RCC,20,75,II,53,,0,48.25,0.5,383.0,0,191.6,674.0,1171.0,0.0,computed_checked_against_code_rules,True
+P017,A_conventional,M40,mild,RCC,20,25,I,53,,0,48.25,0.5,372.0,0,186,715.0,1113.0,0.0,computed_checked_against_code_rules,True
+P018,A_conventional,M20,mild,RCC,20,25,II,53,,0,26.6,0.55,338.0,0,186,717.0,1173.0,0.0,computed_checked_against_code_rules,True
+P019,A_conventional,M25,moderate,RCC,20,75,IV,43,,0,31.6,0.5,383.0,0,191.6,604.0,1235.0,0.0,computed_checked_against_code_rules,True
+P020,A_conventional,M35,moderate,RCC,20,25,II,53,,0,43.25,0.5,372.0,0,186,678.0,1191.0,0.0,computed_checked_against_code_rules,True
+P021,A_conventional,M25,moderate,RCC,20,50,II,43,,0,31.6,0.5,372.0,0,186,683.0,1160.0,0.0,computed_checked_against_code_rules,True
+P022,A_conventional,M15,mild,PCC,10,75,II,53,,0,20.77,0.6,357.0,0,214.2,985.0,780.0,0.0,computed_checked_against_code_rules,True
+P023,A_conventional,M35,moderate,RCC,20,75,II,53,,0,43.25,0.5,383.0,0,191.6,668.0,1174.0,0.0,computed_checked_against_code_rules,True
+P024,A_conventional,M30,moderate,RCC,20,75,II,43,,0,38.25,0.5,383.0,0,191.6,679.0,1146.0,0.0,computed_checked_against_code_rules,True
+P025,A_conventional,M35,mild,RCC,40,75,III,53,,0,43.25,0.55,309.0,0,170.0,536.0,1400.0,0.0,computed_checked_against_code_rules,True
+P026,A_conventional,M25,mild,PCC,20,75,IV,53,,0,31.6,0.6,319.0,0,191.6,659.0,1247.0,0.0,computed_checked_against_code_rules,True
+P027,A_conventional,M35,moderate,RCC,20,75,III,53,,0,43.25,0.5,383.0,0,191.6,646.0,1169.0,0.0,computed_checked_against_code_rules,True
+P028,A_conventional,M25,mild,PCC,20,100,III,43,,0,31.6,0.6,329.0,0,197.2,699.0,1195.0,0.0,computed_checked_against_code_rules,True
+P029,A_conventional,M20,mild,RCC,40,25,II,43,,0,26.6,0.55,300.0,0,165,574.0,1381.0,0.0,computed_checked_against_code_rules,True
+P030,A_conventional,M20,mild,PCC,20,75,II,53,,0,26.6,0.6,319.0,0,191.6,744.0,1125.0,0.0,computed_checked_against_code_rules,True
+P031,B_exposure_durability,M40,severe,RCC,20,100,II,53,,0.8,48.25,0.45,372.0,0,167.6,683.0,1228.0,2.98,computed_checked_against_code_rules,True
+P032,B_exposure_durability,M40,severe,RCC,20,100,III,53,,1.0,48.25,0.45,372.0,0,167.6,650.0,1234.0,3.72,computed_checked_against_code_rules,True
+P033,B_exposure_durability,M45,severe,RCC,20,125,II,53,,1.0,53.25,0.45,383.0,0,172.3,669.0,1209.0,3.83,computed_checked_against_code_rules,True
+P034,B_exposure_durability,M40,extreme,RCC,20,75,II,53,,1.0,48.25,0.4,407.0,0,162.8,657.0,1231.0,4.07,computed_checked_against_code_rules,True
+P035,B_exposure_durability,M30,severe,RCC,10,75,III,53,,0.8,38.25,0.45,405.0,0,182.1,906.0,906.0,3.24,computed_checked_against_code_rules,True
+P036,B_exposure_durability,M30,severe,RCC,40,125,II,53,,0.8,38.25,0.45,340.0,0,152.9,541.0,1427.0,2.72,computed_checked_against_code_rules,True
+P037,B_exposure_durability,M45,severe,RCC,20,100,II,53,,0.8,53.25,0.45,372.0,0,167.6,679.0,1196.0,2.98,computed_checked_against_code_rules,True
+P038,B_exposure_durability,M40,very severe,RCC,40,100,III,53,,0,48.25,0.45,389.0,0,174.9,471.0,1412.0,0.0,computed_checked_against_code_rules,True
+P039,B_exposure_durability,M40,very severe,RCC,40,100,III,53,,0,48.25,0.45,389.0,0,174.9,482.0,1391.0,0.0,computed_checked_against_code_rules,True
+P040,B_exposure_durability,M50,very severe,RCC,20,125,III,53,,1.0,58.25,0.42,410.0,0,172.3,614.0,1238.0,4.1,computed_checked_against_code_rules,True
+P041,B_exposure_durability,M30,severe,RCC,40,125,II,53,,1.0,38.25,0.45,340.0,0,152.9,532.0,1447.0,3.4,computed_checked_against_code_rules,True
+P042,B_exposure_durability,M45,extreme,RCC,40,125,III,53,,1.0,53.25,0.4,382.0,0,152.9,473.0,1457.0,3.82,computed_checked_against_code_rules,True
+P043,B_exposure_durability,M35,very severe,RCC,20,75,III,53,,0,43.25,0.45,426.0,0,191.6,603.0,1181.0,0.0,computed_checked_against_code_rules,True
+P044,B_exposure_durability,M35,very severe,RCC,20,100,II,53,,1.0,43.25,0.45,372.0,0,167.6,681.0,1190.0,3.72,computed_checked_against_code_rules,True
+P045,B_exposure_durability,M35,very severe,RCC,20,75,II,53,,0,43.25,0.45,426.0,0,191.6,643.0,1157.0,0.0,computed_checked_against_code_rules,True
+P046,C_pumped_workability,M25,moderate,RCC,20,125,II,43,,0.8,31.6,0.5,324.0,0,162.2,840.0,1084.0,2.6,computed_checked_against_code_rules,True
+P047,C_pumped_workability,M25,moderate,RCC,20,125,II,43,,1.2,31.6,0.5,324.0,0,162.2,834.0,1121.0,3.89,computed_checked_against_code_rules,True
+P048,C_pumped_workability,M40,severe,RCC,20,125,II,53,,1.5,48.25,0.45,360.0,0,162.2,801.0,1109.0,5.41,computed_checked_against_code_rules,True
+P049,C_pumped_workability,M45,moderate,RCC,20,200,II,53,,1.0,53.25,0.46,382.0,0,175.6,792.0,1055.0,3.82,computed_checked_against_code_rules,True
+P050,C_pumped_workability,M45,severe,RCC,20,175,II,53,,1.0,53.25,0.45,380.0,0,171.1,784.0,1062.0,3.8,computed_checked_against_code_rules,True
+P051,C_pumped_workability,M35,moderate,RCC,20,125,III,53,,1.0,43.25,0.5,324.0,0,162.2,798.0,1155.0,3.24,computed_checked_against_code_rules,True
+P052,C_pumped_workability,M40,moderate,RCC,10,200,II,53,,1.2,48.25,0.5,393.0,0,196.4,1028.0,751.0,4.71,computed_checked_against_code_rules,True
+P053,C_pumped_workability,M45,moderate,RCC,20,150,II,53,,0.8,53.25,0.46,362.0,0,166.7,819.0,1076.0,2.9,computed_checked_against_code_rules,True
+P054,C_pumped_workability,M25,moderate,RCC,20,100,II,43,,1.2,31.6,0.5,315.0,0,157.7,862.0,1088.0,3.79,computed_checked_against_code_rules,True
+P055,C_pumped_workability,M45,severe,RCC,20,100,II,53,,1.0,53.25,0.45,351.0,0,157.7,827.0,1131.0,3.51,computed_checked_against_code_rules,True
+P056,C_pumped_workability,M40,severe,RCC,10,175,II,53,,1.2,48.25,0.45,425.0,0,191.4,984.0,760.0,5.1,computed_checked_against_code_rules,True
+P057,C_pumped_workability,M35,moderate,RCC,20,100,II,53,,1.0,43.25,0.5,315.0,0,157.7,854.0,1123.0,3.15,computed_checked_against_code_rules,True
+P058,C_pumped_workability,M35,moderate,RCC,20,175,III,53,,1.0,43.25,0.5,342.0,0,171.1,785.0,1128.0,3.42,computed_checked_against_code_rules,True
+P059,C_pumped_workability,M40,severe,RCC,10,100,III,53,,1.2,48.25,0.45,392.0,0,176.4,1003.0,824.0,4.7,computed_checked_against_code_rules,True
+P060,C_pumped_workability,M40,severe,RCC,20,100,II,53,,1.5,48.25,0.45,351.0,0,157.7,820.0,1131.0,5.26,computed_checked_against_code_rules,True
+P061,D_fly_ash_ggbs_blends,M30,moderate,RCC,40,100,II,53,FA25,0.8,38.25,0.45,248.0,82.0,148.7,534.0,1409.0,2.64,computed_checked_against_code_rules,True
+P062,D_fly_ash_ggbs_blends,M40,moderate,RCC,20,75,II,53,GGBS50,0,48.25,0.476,201.0,201.0,191.6,656.0,1160.0,0.0,computed_checked_against_code_rules,True
+P063,D_fly_ash_ggbs_blends,M40,moderate,RCC,20,100,II,53,FA20,0,48.25,0.455,347.0,87.0,197.2,627.0,1091.0,0.0,computed_checked_against_code_rules,True
+P064,D_fly_ash_ggbs_blends,M30,moderate,RCC,40,50,II,53,FA20,0,38.25,0.455,290.0,73.0,165,521.0,1378.0,0.0,computed_checked_against_code_rules,True
+P065,D_fly_ash_ggbs_blends,M25,moderate,RCC,10,75,II,53,FA25,0.8,31.6,0.455,300.0,100.0,182.1,934.0,850.0,3.21,computed_checked_against_code_rules,True
+P066,D_fly_ash_ggbs_blends,M40,moderate,RCC,10,100,II,53,GGBS30,0.8,48.25,0.476,275.0,118.0,187.4,952.0,861.0,3.15,computed_checked_against_code_rules,True
+P067,D_fly_ash_ggbs_blends,M45,moderate,RCC,10,100,II,53,GGBS50,0.8,53.25,0.438,214.0,214.0,187.4,903.0,860.0,3.42,computed_checked_against_code_rules,True
+P068,D_fly_ash_ggbs_blends,M35,very severe,RCC,20,125,II,53,GGBS40,1.0,43.25,0.429,241.0,161.0,172.3,664.0,1197.0,4.02,computed_checked_against_code_rules,True
+P069,D_fly_ash_ggbs_blends,M45,moderate,RCC,40,100,II,53,FA20,0,53.25,0.418,335.0,84.0,174.9,489.0,1343.0,0.0,computed_checked_against_code_rules,True
+P070,D_fly_ash_ggbs_blends,M40,very severe,RCC,20,125,II,53,FA30,0.8,48.25,0.409,295.0,126.0,172.3,641.0,1151.0,3.37,computed_checked_against_code_rules,True
+P071,D_fly_ash_ggbs_blends,M35,moderate,RCC,20,75,II,53,GGBS50,0.8,43.25,0.476,171.0,171.0,162.8,698.0,1195.0,2.74,computed_checked_against_code_rules,True
+P072,D_fly_ash_ggbs_blends,M30,severe,RCC,20,75,II,53,FA25,0.8,38.25,0.409,299.0,100.0,162.8,663.0,1212.0,3.18,computed_checked_against_code_rules,True
+P073,D_fly_ash_ggbs_blends,M35,moderate,RCC,20,100,II,53,GGBS60,0.6,43.25,0.476,141.0,211.0,167.6,688.0,1212.0,2.11,computed_checked_against_code_rules,True
+P074,D_fly_ash_ggbs_blends,M45,moderate,RCC,20,75,II,53,FA35,0.6,53.25,0.418,253.0,136.0,162.8,661.0,1168.0,2.34,computed_checked_against_code_rules,True
+P075,D_fly_ash_ggbs_blends,M35,very severe,RCC,20,75,II,53,GGBS50,0.8,43.25,0.429,190.0,190.0,162.8,672.0,1204.0,3.04,computed_checked_against_code_rules,True
+P076,E_aggregate_zones,M25,moderate,RCC,10,75,I,43,,0,31.6,0.5,428.0,0,214.2,917.0,751.0,0.0,computed_checked_against_code_rules,True
+P077,E_aggregate_zones,M25,moderate,RCC,20,50,I,43,,0,31.6,0.5,372.0,0,186,708.0,1107.0,0.0,computed_checked_against_code_rules,True
+P078,E_aggregate_zones,M30,moderate,RCC,40,50,I,43,,0,38.25,0.5,330.0,0,165,573.0,1405.0,0.0,computed_checked_against_code_rules,True
+P079,E_aggregate_zones,M30,moderate,RCC,10,75,II,43,,0,38.25,0.5,428.0,0,214.2,898.0,853.0,0.0,computed_checked_against_code_rules,True
+P080,E_aggregate_zones,M30,moderate,RCC,20,75,II,43,,0,38.25,0.5,383.0,0,191.6,658.0,1137.0,0.0,computed_checked_against_code_rules,True
+P081,E_aggregate_zones,M25,moderate,RCC,40,50,II,43,,0,31.6,0.5,330.0,0,165,555.0,1502.0,0.0,computed_checked_against_code_rules,True
+P082,E_aggregate_zones,M30,moderate,RCC,10,100,III,43,,0,38.25,0.5,441.0,0,220.5,860.0,836.0,0.0,computed_checked_against_code_rules,True
+P083,E_aggregate_zones,M30,moderate,RCC,20,75,III,43,,0,38.25,0.5,383.0,0,191.6,652.0,1154.0,0.0,computed_checked_against_code_rules,True
+P084,E_aggregate_zones,M25,moderate,RCC,40,50,III,43,,0,31.6,0.5,330.0,0,165,517.0,1376.0,0.0,computed_checked_against_code_rules,True
+P085,E_aggregate_zones,M30,moderate,RCC,10,50,IV,43,,0,38.25,0.5,416.0,0,208,831.0,860.0,0.0,computed_checked_against_code_rules,True
+P086,E_aggregate_zones,M30,moderate,RCC,20,50,IV,43,,0,38.25,0.5,372.0,0,186,627.0,1326.0,0.0,computed_checked_against_code_rules,True
+P087,E_aggregate_zones,M30,moderate,RCC,40,75,IV,43,,0,38.25,0.5,340.0,0,170.0,461.0,1468.0,0.0,computed_checked_against_code_rules,True
+P088,E_aggregate_zones,M30,moderate,RCC,20,100,II,43,,0,38.25,0.5,394.0,0,197.2,667.0,1200.0,0.0,computed_checked_against_code_rules,True
+P089,E_aggregate_zones,M30,moderate,RCC,20,75,III,43,,0,38.25,0.5,383.0,0,191.6,638.0,1195.0,0.0,computed_checked_against_code_rules,True
+P090,E_aggregate_zones,M30,moderate,RCC,40,50,II,43,,0,38.25,0.5,330.0,0,165,557.0,1410.0,0.0,computed_checked_against_code_rules,True
+P091,F_advanced_special,M55,severe,RCC,20,100,II,53,SF8,1.5,63.25,0.39,326.0,28.0,138.0,691.0,1304.0,5.31,computed_indicative_needs_trial_mix,True
+P092,F_advanced_special,M60,severe,RCC,20,125,II,53,SF10,1.5,68.25,0.35,365.0,41.0,141.9,654.0,1280.0,6.08,computed_indicative_needs_trial_mix,True
+P093,F_advanced_special,M65,severe,RCC,20,150,II,53,SF10,1.5,73.25,0.32,410.0,46.0,145.8,624.0,1253.0,6.84,computed_indicative_needs_trial_mix,True
+P094,F_advanced_special,M70,severe,RCC,20,175,II,53,SF10,1.5,78.25,0.3,449.0,50.0,149.7,600.0,1226.0,7.49,computed_indicative_needs_trial_mix,True
+P095,F_advanced_special,M30,moderate,RCC,10,175,II,53,FA30,1.5,38.25,0.362,346.0,149.0,179.4,820.0,851.0,7.43,computed_indicative_needs_trial_mix,True
+P096,F_advanced_special,M40,severe,RCC,10,175,II,53,FA25,1.6,48.25,0.362,371.0,124.0,179.4,824.0,855.0,7.92,computed_indicative_needs_trial_mix,True
+P097,F_advanced_special,M25,moderate,RCC,40,50,II,53,FA30,0.0,31.6,0.455,254.0,109.0,165,517.0,1353.0,0.0,computed_indicative_needs_trial_mix,True
+P098,F_advanced_special,M40,extreme,RCC,20,100,II,53,GGBS50,1.0,48.25,0.381,207.0,207.0,157.7,650.0,1220.0,4.14,computed_indicative_needs_trial_mix,True
+P099,F_advanced_special,M50,severe,RCC,20,75,II,53,FA15;SF5,1.2,58.25,0.382,301.0,75.0,143.7,669.0,1266.0,4.52,computed_indicative_needs_trial_mix,True
+P100,F_advanced_special,M35,severe,RCC,40,100,II,53,FA25,0.8,43.25,0.409,273.0,91.0,148.7,512.0,1412.0,2.91,computed_indicative_needs_trial_mix,True

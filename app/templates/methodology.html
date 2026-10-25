@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Technical Methodology — ConcreteMix AI{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
+    <div>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Technical Calculation Methodology</h1>
+        <p class="text-sm text-slate-500 mt-2">Engineering principles, deterministic algorithms, and IS code boundary rules powering ConcreteMix AI.</p>
+    </div>
+
+    <section class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h2 class="text-xl font-bold text-slate-900">1. Core Design Philosophy: Deterministic vs Generative</h2>
+        <p class="text-sm text-slate-600 leading-relaxed">
+            ConcreteMix AI separates natural-language understanding and reference retrieval from numerical engineering calculations. <strong>No LLM calculates batch weights or water-cement ratios.</strong>
+        </p>
+        <p class="text-sm text-slate-600 leading-relaxed">
+            Instead, problems are converted into typed data structures that are processed by our deterministic mathematical implementation of <strong>IS 10262:2019</strong> and verified against <strong>IS 456:2000 Table 5</strong>.
+        </p>
+    </section>
+
+    <section class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h2 class="text-xl font-bold text-slate-900">2. Target Mean Compressive Strength (Clause 4.2)</h2>
+        <p class="text-sm text-slate-600 leading-relaxed">
+            The target mean compressive strength at 28 days (\(f'_{ck}\)) is governed by:
+        </p>
+        <div class="p-4 bg-slate-50 rounded-xl font-mono text-xs text-slate-800 border border-slate-200">
+            f'ck = max( fck + 1.65 &times; s,  fck + X )
+        </div>
+        <p class="text-xs text-slate-500">
+            Where <em>s</em> is the assumed standard deviation (3.5 for M10-M15, 4.0 for M20-M25, 5.0 for M30-M60) and <em>X</em> is the addition factor based on concrete grade (5.0, 5.5, 6.5, or 8.0 N/mm²).
+        </p>
+    </section>
+
+    <section class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h2 class="text-xl font-bold text-slate-900">3. Selection of Water-Cement Ratio and Durability Bounds</h2>
+        <p class="text-sm text-slate-600 leading-relaxed">
+            The initial w/c ratio is obtained from 28-day strength curves (OPC 33, 43, 53 grade) and checked against the maximum permissible limit specified in IS 456:2000 Table 5 for the given exposure condition. <strong>The lower (stricter) value is adopted.</strong>
+        </p>
+    </section>
+
+    <section class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h2 class="text-xl font-bold text-slate-900">4. Absolute Volume Method & 100% Volume Yield Check</h2>
+        <p class="text-sm text-slate-600 leading-relaxed">
+            Every cubic metre (1.0 m³) of compacted concrete satisfies the absolute volume summation equation:
+        </p>
+        <div class="p-4 bg-slate-50 rounded-xl font-mono text-xs text-slate-800 border border-slate-200">
+            V_cement + V_SCM + V_water + V_admixture + V_air + V_coarse_agg + V_fine_agg = 1.000 m³
+        </div>
+        <p class="text-xs text-slate-500">
+            Entrapped air volume is accounted for based on aggregate size (0.8% for 40 mm, 1.0% for 20 mm, 1.5% for 10 mm).
+        </p>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,665 @@
+{% extends "base.html" %}
+
+{% block title %}Mix Design Workbench — ConcreteMix AI{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="mb-8">
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Concrete Mix Design Workbench</h1>
+        <p class="text-sm text-slate-500 mt-1">IS 10262:2019 proportioning calculator with real-time natural language parameter extraction and multi-admixture blending.</p>
+    </div>
+
+    <!-- Main Grid: Input Column & Interactive Results Column -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Input Form Section (5 Cols) -->
+        <div class="lg:col-span-5 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label for="problemText" class="text-sm font-bold text-slate-800">Natural-Language Problem Statement</label>
+                    <button type="button" id="btnSample" class="text-xs text-teal-700 hover:underline font-semibold">Load Ternary Blend Sample</button>
+                </div>
+                <textarea id="problemText" rows="5" class="w-full text-sm rounded-xl border border-slate-300 p-3 focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent font-sans" placeholder="e.g. Design M50 concrete for prestressed girder with 15% Fly Ash, 5% Silica Fume, and superplasticiser for 100mm slump in severe exposure..."></textarea>
+                
+                <!-- Live AI Detection Pill Bar -->
+                <div id="liveDetectionBox" class="mt-2 hidden">
+                    <div class="text-[11px] font-bold uppercase tracking-wider text-teal-800 mb-1 flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-teal-600 animate-ping"></span>
+                        Detected Specifications (Auto-Filling Matrix):
+                    </div>
+                    <div id="detectedPills" class="flex flex-wrap gap-1.5"></div>
+                </div>
+            </div>
+
+            <!-- Structured Parameters Accordion/Grid -->
+            <div class="border-t border-slate-100 pt-4 space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Basic Design Parameters</h3>
+                    <span class="text-[11px] text-slate-400">Auto-filled &bull; Editable</span>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Characteristic fck</label>
+                        <select id="inputFck" class="w-full text-sm rounded-lg border border-slate-300 p-2">
+                            <option value="">Auto (from statement)</option>
+                            <option value="15">M15 (Lean / Bedding)</option>
+                            <option value="20">M20</option>
+                            <option value="25">M25</option>
+                            <option value="30">M30 (Standard Frame)</option>
+                            <option value="35">M35</option>
+                            <option value="40">M40</option>
+                            <option value="45">M45</option>
+                            <option value="50">M50</option>
+                            <option value="55">M55</option>
+                            <option value="60">M60 (High Strength)</option>
+                            <option value="65">M65</option>
+                            <option value="70">M70 (Ultra High Strength)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Exposure Condition</label>
+                        <select id="inputExposure" class="w-full text-sm rounded-lg border border-slate-300 p-2">
+                            <option value="">Auto (from statement)</option>
+                            <option value="mild">Mild (Interior / Dry)</option>
+                            <option value="moderate">Moderate (Sheltered / Soil)</option>
+                            <option value="severe">Severe (Coastal / Wetting)</option>
+                            <option value="very severe">Very Severe (Sea Spray / Salt)</option>
+                            <option value="extreme">Extreme (Tidal / Offshore)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Member Type</label>
+                        <select id="inputMember" class="w-full text-sm rounded-lg border border-slate-300 p-2">
+                            <option value="RCC">RCC (Reinforced)</option>
+                            <option value="PCC">PCC (Plain)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Max Aggregate Size</label>
+                        <select id="inputMaxSize" class="w-full text-sm rounded-lg border border-slate-300 p-2">
+                            <option value="20">20 mm (Standard)</option>
+                            <option value="10">10 mm (Congested / Thin)</option>
+                            <option value="40">40 mm (Mass Concrete / Raft)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Target Slump (mm)</label>
+                        <input type="number" id="inputSlump" class="w-full text-sm rounded-lg border border-slate-300 p-2" placeholder="Auto from text (e.g. 100)" min="25" max="200" step="25">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">FA Grading Zone</label>
+                        <select id="inputZone" class="w-full text-sm rounded-lg border border-slate-300 p-2">
+                            <option value="II">Zone II (Standard Sand)</option>
+                            <option value="I">Zone I (Coarse / Quarry)</option>
+                            <option value="III">Zone III (Finer Sand)</option>
+                            <option value="IV">Zone IV (Fine Sand)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Cement Grade</label>
+                        <select id="inputCementGrade" class="w-full text-sm rounded-lg border border-slate-300 p-2">
+                            <option value="43">OPC 43 Grade</option>
+                            <option value="53">OPC 53 Grade (High Early / HSC)</option>
+                            <option value="33">OPC 33 Grade (Low Heat)</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center pt-5">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" id="inputPumped" class="rounded text-teal-700 focus:ring-teal-600">
+                            <span class="text-xs font-medium text-slate-700">Pumpable Mix (-10% CA)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- ══════════════ MULTI-ADMIXTURE CONFIGURATION ══════════════ -->
+                <div class="border-t border-slate-100 pt-4 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-teal-800 flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-teal-700" fill="currentColor" viewBox="0 0 20 20"><path d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.814 14.773 2.164 18 5 18h10c2.836 0 4.186-3.227 2.293-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7z"/></svg>
+                            Mineral Admixtures (Ternary / Multi-Blend)
+                        </h3>
+                        <span class="text-[10px] text-teal-700 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded font-semibold">Simultaneous Blends</span>
+                    </div>
+
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-3">
+                        <!-- Fly Ash -->
+                        <div class="flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="chkFA" class="rounded text-teal-700 focus:ring-teal-600">
+                                <label for="chkFA" class="text-xs font-semibold text-slate-800">Fly Ash (IS 3812 Part 1)</label>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <input type="number" id="pctFA" class="w-20 text-xs rounded-lg border border-slate-300 p-1.5 bg-white text-right" placeholder="25" min="0" max="40" step="5">
+                                <span class="text-xs text-slate-500 font-semibold">%</span>
+                            </div>
+                        </div>
+
+                        <!-- GGBS (Slag) -->
+                        <div class="flex items-center justify-between gap-3 border-t border-slate-200/60 pt-2.5">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="chkGGBS" class="rounded text-teal-700 focus:ring-teal-600">
+                                <label for="chkGGBS" class="text-xs font-semibold text-slate-800">GGBS / Slag (IS 16714)</label>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <input type="number" id="pctGGBS" class="w-20 text-xs rounded-lg border border-slate-300 p-1.5 bg-white text-right" placeholder="40" min="0" max="60" step="5">
+                                <span class="text-xs text-slate-500 font-semibold">%</span>
+                            </div>
+                        </div>
+
+                        <!-- Silica Fume -->
+                        <div class="flex items-center justify-between gap-3 border-t border-slate-200/60 pt-2.5">
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="chkSF" class="rounded text-teal-700 focus:ring-teal-600">
+                                <label for="chkSF" class="text-xs font-semibold text-slate-800">Silica Fume (IS 15388)</label>
+                            </div>
+                            <div class="flex items-center gap-1.5">
+                                <input type="number" id="pctSF" class="w-20 text-xs rounded-lg border border-slate-300 p-1.5 bg-white text-right" placeholder="5" min="0" max="15" step="1">
+                                <span class="text-xs text-slate-500 font-semibold">%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chemical Superplasticiser -->
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-2">
+                        <span class="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">Chemical Superplasticiser (IS 9103)</span>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] font-medium text-slate-600 mb-1">Dosage (% binder)</label>
+                                <input type="number" id="inputSpPct" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-white" placeholder="e.g. 1.0" min="0" max="3.0" step="0.1">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-medium text-slate-600 mb-1">Water Reduction (% wr)</label>
+                                <input type="number" id="inputSpWr" class="w-full text-xs rounded-lg border border-slate-300 p-2 bg-white" placeholder="e.g. 20" min="0" max="35" step="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="btnCalculate" class="w-full py-3.5 px-4 rounded-xl font-bold text-white bg-teal-700 hover:bg-teal-800 shadow-md transition flex justify-center items-center gap-2">
+                <span id="btnText">Execute Proportioning Engine</span>
+                <div id="btnSpinner" class="hidden w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            </button>
+        </div>
+
+        <!-- Output & Interpretation Section (7 Cols) -->
+        <div class="lg:col-span-7 space-y-6">
+            
+            <!-- Placeholder state before calculation -->
+            <div id="resultsPlaceholder" class="bg-white p-12 rounded-2xl border border-dashed border-slate-300 text-center">
+                <div class="w-12 h-12 rounded-xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center font-bold text-lg mb-3">IS</div>
+                <h3 class="text-base font-bold text-slate-700">Calculation Engine Standing By</h3>
+                <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto leading-relaxed">
+                    Type or paste any problem statement on the left. You can specify simultaneous admixtures like Fly Ash + Silica Fume together. The engine calculates individual mass fractions and absolute volumes per IS 10262.
+                </p>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="errorBox" class="hidden p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm">
+                <div class="font-bold mb-1">Validation Issue</div>
+                <div id="errorDetails"></div>
+            </div>
+
+            <!-- Dynamic Results Container -->
+            <div id="resultsContainer" class="hidden space-y-6">
+                
+                <!-- Audit & Clarification Card -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-teal-600"></span>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-800">Engineering Rationale & Input Traceability</h3>
+                        </div>
+                        <span class="text-[11px] text-slate-400">Why each parameter was chosen</span>
+                    </div>
+
+                    <div class="overflow-hidden border border-slate-200/80 rounded-xl">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-600 uppercase font-semibold border-b border-slate-200">
+                                <tr>
+                                    <th class="py-2.5 px-3 w-1/4">Parameter</th>
+                                    <th class="py-2.5 px-3 w-1/4">Value Chosen</th>
+                                    <th class="py-2.5 px-3 w-1/2">Engineering Reason & Source</th>
+                                </tr>
+                            </thead>
+                            <tbody id="auditTableBody" class="divide-y divide-slate-100 text-slate-700 bg-white">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="auditWarnings" class="space-y-1"></div>
+                </div>
+
+                <!-- Primary Quantities Display -->
+                <div class="bg-white p-6 rounded-2xl border border-teal-200 shadow-sm relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-wider text-teal-700">Calculated Mix Proportions (SSD)</span>
+                            <h2 class="text-2xl font-black text-slate-900 mt-0.5" id="resTargetSummary">M30 Mix</h2>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="window.print()" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition flex items-center gap-1.5 no-print" title="Print or Save PDF">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+                                Print / PDF
+                            </button>
+                            <div class="text-right pl-3 border-l border-slate-200">
+                                <div class="text-[10px] text-slate-400 font-semibold uppercase">Ratio by mass</div>
+                                <div class="text-lg font-mono font-bold text-slate-800" id="resRatio">1 : 1.85 : 3.17</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quantities Matrix -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center my-4">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="text-[10px] uppercase font-bold text-slate-500">Cement</div>
+                            <div class="text-lg font-extrabold text-slate-900 mt-0.5"><span id="resCement">-</span> <span class="text-xs font-normal text-slate-500">kg/m³</span></div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="text-[10px] uppercase font-bold text-slate-500">Water (Adopted w/c)</div>
+                            <div class="text-lg font-extrabold text-slate-900 mt-0.5"><span id="resWater">-</span> <span class="text-xs font-normal text-slate-500">kg/m³</span></div>
+                            <div class="text-[10px] text-teal-700 font-semibold" id="resWcVal">w/c: 0.50</div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="text-[10px] uppercase font-bold text-slate-500">Fine Aggregate</div>
+                            <div class="text-lg font-extrabold text-slate-900 mt-0.5"><span id="resFA">-</span> <span class="text-xs font-normal text-slate-500">kg/m³</span></div>
+                        </div>
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                            <div class="text-[10px] uppercase font-bold text-slate-500">Coarse Aggregate</div>
+                            <div class="text-lg font-extrabold text-slate-900 mt-0.5"><span id="resCA">-</span> <span class="text-xs font-normal text-slate-500">kg/m³</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Admixture Results Banner -->
+                    <div id="resAdmixtureBox" class="my-3 p-3 bg-teal-50/70 rounded-xl border border-teal-200 text-xs flex flex-wrap justify-between items-center gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-teal-900">Mineral SCM Additions:</span>
+                            <span id="resScmBreakdown" class="text-teal-800 font-mono font-bold">None</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-teal-900">Chemical Superplasticiser:</span>
+                            <span id="resSpMass" class="text-teal-800 font-mono font-bold">0.0 kg/m³</span>
+                        </div>
+                    </div>
+
+                    <!-- Field moisture adjustments -->
+                    <div class="border-t border-slate-100 pt-3 text-xs text-slate-600 flex justify-between items-center">
+                        <span class="font-semibold text-slate-700">Site Adjusted Quantities:</span>
+                        <span id="resFieldAdj" class="font-mono text-slate-800">Water: - kg | FA: - kg | CA: - kg</span>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step IS 10262 Audit Log -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">Step-by-Step Code Verification</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-50 text-slate-600 uppercase border-y border-slate-200">
+                                <tr>
+                                    <th class="py-2.5 px-3">Step</th>
+                                    <th class="py-2.5 px-3">Clause Reference</th>
+                                    <th class="py-2.5 px-3">Value</th>
+                                    <th class="py-2.5 px-3">Calculation Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resStepsTable" class="divide-y divide-slate-100 text-slate-700"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Similar Benchmark Solved Examples (RAG) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Retrieved Benchmark Examples (From 100 Dataset)</h3>
+                        <span class="text-xs text-teal-700 font-semibold">RAG Ground Truth</span>
+                    </div>
+                    <div id="similarExamplesList" class="space-y-3"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const btnSample = document.getElementById("btnSample");
+    const btnCalc = document.getElementById("btnCalculate");
+    const problemText = document.getElementById("problemText");
+    const inputFck = document.getElementById("inputFck");
+    const inputExposure = document.getElementById("inputExposure");
+    const inputSlump = document.getElementById("inputSlump");
+    const inputMember = document.getElementById("inputMember");
+    const inputMaxSize = document.getElementById("inputMaxSize");
+    const inputZone = document.getElementById("inputZone");
+    const inputCementGrade = document.getElementById("inputCementGrade");
+    const inputPumped = document.getElementById("inputPumped");
+
+    // Multi-admixture checkboxes & percentage inputs
+    const chkFA = document.getElementById("chkFA");
+    const pctFA = document.getElementById("pctFA");
+    const chkGGBS = document.getElementById("chkGGBS");
+    const pctGGBS = document.getElementById("pctGGBS");
+    const chkSF = document.getElementById("chkSF");
+    const pctSF = document.getElementById("pctSF");
+
+    const inputSpPct = document.getElementById("inputSpPct");
+    const inputSpWr = document.getElementById("inputSpWr");
+
+    const liveDetectionBox = document.getElementById("liveDetectionBox");
+    const detectedPills = document.getElementById("detectedPills");
+
+    const placeholder = document.getElementById("resultsPlaceholder");
+    const resultsContainer = document.getElementById("resultsContainer");
+    const errorBox = document.getElementById("errorBox");
+    const errorDetails = document.getElementById("errorDetails");
+
+    let parseDebounce = null;
+
+    // Real-time keyword extraction listener as user types
+    problemText.addEventListener("input", () => {
+        clearTimeout(parseDebounce);
+        parseDebounce = setTimeout(triggerLiveParse, 300);
+    });
+
+    async function triggerLiveParse() {
+        const text = problemText.value.trim();
+        if (!text) {
+            liveDetectionBox.classList.add("hidden");
+            return;
+        }
+
+        try {
+            const resp = await fetch("/api/design/parse", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ problem_text: text })
+            });
+            const data = await resp.json();
+            const p = data.parsed;
+
+            if (p) {
+                // Auto-fill basic inputs
+                if (p.fck) inputFck.value = p.fck;
+                if (p.exposure) inputExposure.value = p.exposure;
+                if (p.member) inputMember.value = p.member;
+                if (p.max_size) inputMaxSize.value = p.max_size;
+                if (p.slump) inputSlump.value = p.slump;
+                if (p.zone) inputZone.value = p.zone;
+                if (p.cement_grade) inputCementGrade.value = p.cement_grade;
+                if (typeof p.pumped === "boolean") inputPumped.checked = p.pumped;
+
+                // Reset checkboxes first
+                chkFA.checked = false;
+                pctFA.value = "";
+                chkGGBS.checked = false;
+                pctGGBS.value = "";
+                chkSF.checked = false;
+                pctSF.value = "";
+
+                // Auto-fill MULTIPLE admixtures simultaneously if detected!
+                if (p.scm && p.scm.length > 0) {
+                    p.scm.forEach(([type, pct]) => {
+                        if (type === "FA") {
+                            chkFA.checked = true;
+                            pctFA.value = pct;
+                        } else if (type === "GGBS") {
+                            chkGGBS.checked = true;
+                            pctGGBS.value = pct;
+                        } else if (type === "SF") {
+                            chkSF.checked = true;
+                            pctSF.value = pct;
+                        }
+                    });
+                }
+
+                if (typeof p.sp_pct === "number") {
+                    inputSpPct.value = p.sp_pct;
+                }
+                if (typeof p.sp_wr === "number") {
+                    inputSpWr.value = Math.round(p.sp_wr * 100);
+                }
+
+                // Render Detected specification pills
+                const pills = [];
+                if (p.fck) pills.push(`Grade: M${p.fck}`);
+                if (p.exposure) pills.push(`Exposure: ${p.exposure.toUpperCase()}`);
+                if (p.member) pills.push(`Member: ${p.member}`);
+                if (p.max_size) pills.push(`Agg: ${p.max_size}mm`);
+                if (p.slump) pills.push(`Slump: ${p.slump}mm`);
+                if (p.zone) pills.push(`Sand: Zone ${p.zone}`);
+                if (p.pumped) pills.push(`Pumping: Yes`);
+                if (p.scm && p.scm.length > 0) {
+                    pills.push(`SCMs: ${p.scm.map(s => s[0]+' '+s[1]+'%').join(' + ')}`);
+                }
+                if (p.sp_pct) pills.push(`SP: ${p.sp_pct}% (${Math.round((p.sp_wr||0.2)*100)}% WR)`);
+
+                detectedPills.innerHTML = pills.map(pill => 
+                    `<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-teal-50 text-teal-800 border border-teal-200">${pill}</span>`
+                ).join("");
+                liveDetectionBox.classList.remove("hidden");
+            }
+        } catch (err) {
+            console.error("Live parse error", err);
+        }
+    }
+
+    btnSample.addEventListener("click", () => {
+        problemText.value = "Design M50 concrete for precast prestressed girders with 15% Fly Ash, 5% Silica Fume, and superplasticiser for 100mm slump in severe exposure";
+        triggerLiveParse();
+    });
+
+    btnCalc.addEventListener("click", async () => {
+        errorBox.classList.add("hidden");
+        document.getElementById("btnSpinner").classList.remove("hidden");
+        document.getElementById("btnText").textContent = "Calculating...";
+
+        const payload = {
+            problem_text: problemText.value.trim()
+        };
+        if (inputFck.value) payload.fck = parseFloat(inputFck.value);
+        if (inputExposure.value) payload.exposure = inputExposure.value;
+        if (inputSlump.value) payload.slump = parseFloat(inputSlump.value);
+        if (inputMember.value) payload.member = inputMember.value;
+        if (inputMaxSize.value) payload.max_size = parseInt(inputMaxSize.value);
+        if (inputZone.value) payload.zone = inputZone.value;
+        if (inputCementGrade.value) payload.cement_grade = parseInt(inputCementGrade.value);
+        payload.pumped = inputPumped.checked;
+
+        // Build list of MULTIPLE SCMs simultaneously
+        const scmList = [];
+        if (chkFA.checked && pctFA.value) {
+            scmList.push({ type: "FA", percent: parseFloat(pctFA.value) });
+        }
+        if (chkGGBS.checked && pctGGBS.value) {
+            scmList.push({ type: "GGBS", percent: parseFloat(pctGGBS.value) });
+        }
+        if (chkSF.checked && pctSF.value) {
+            scmList.push({ type: "SF", percent: parseFloat(pctSF.value) });
+        }
+        payload.scm = scmList;
+
+        // Chemical admixture inputs
+        if (inputSpPct.value) {
+            payload.sp_pct = parseFloat(inputSpPct.value);
+        }
+        if (inputSpWr.value) {
+            payload.sp_wr = parseFloat(inputSpWr.value) / 100.0;
+        }
+
+        try {
+            const resp = await fetch("/api/design", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await resp.json();
+
+            if (!resp.ok) {
+                let msg = data.detail?.message || "Failed to calculate mix";
+                if (data.detail?.errors) {
+                    msg += ": " + data.detail.errors.join(", ");
+                }
+                throw new Error(msg);
+            }
+
+            // Render Output
+            renderResults(data);
+            placeholder.classList.add("hidden");
+            resultsContainer.classList.remove("hidden");
+
+        } catch (err) {
+            errorDetails.textContent = err.message;
+            errorBox.classList.remove("hidden");
+        } finally {
+            document.getElementById("btnSpinner").classList.add("hidden");
+            document.getElementById("btnText").textContent = "Execute Proportioning Engine";
+        }
+    });
+
+    function renderResults(data) {
+        const mix = data.result.mix_per_m3;
+        const res = data.result;
+
+        document.getElementById("resTargetSummary").textContent = `M${data.parsed_inputs.fck} Concrete (${data.parsed_inputs.exposure.toUpperCase()})`;
+        document.getElementById("resRatio").textContent = mix.ratio_by_mass_cementitious;
+        document.getElementById("resCement").textContent = mix.cement;
+        document.getElementById("resWater").textContent = mix.water;
+        document.getElementById("resWcVal").textContent = `Adopted w/c: ${mix.w_cm}`;
+        document.getElementById("resFA").textContent = mix.fine_aggregate_ssd;
+        document.getElementById("resCA").textContent = mix.coarse_aggregate_ssd;
+
+        // Render Multiple Admixtures in result card
+        const scmEntries = Object.entries(mix.scm || {});
+        if (scmEntries.length > 0) {
+            document.getElementById("resScmBreakdown").textContent = scmEntries.map(([t, kg]) => `${t}: ${kg} kg/m³`).join(" + ");
+        } else {
+            document.getElementById("resScmBreakdown").textContent = "None (100% OPC)";
+        }
+        document.getElementById("resSpMass").textContent = `${mix.admixture || 0.0} kg/m³`;
+
+        const fAdj = mix.field_adjusted;
+        document.getElementById("resFieldAdj").textContent = `Water: ${fAdj.water} kg | FA: ${fAdj.fine_aggregate} kg | CA: ${fAdj.coarse_aggregate} kg`;
+
+        // Render Clean Engineering Traceability Table
+        const tbodyAudit = document.getElementById("auditTableBody");
+        const rows = [];
+
+        // Helper label map
+        const fieldLabels = {
+            fck: "Concrete Grade (fck)",
+            exposure: "Exposure Condition",
+            member: "Member Construction",
+            max_size: "Max Aggregate Size",
+            slump: "Workability / Slump",
+            zone: "Sand Grading Zone",
+            cement_grade: "Cement Type & Grade",
+            pumped: "Placing Method",
+            scm: "Mineral Admixture (SCM)",
+            sp_pct: "Chemical Superplasticiser",
+            sp_wr: "Water Reduction (SP)",
+            sg_cement: "SG Cement",
+            sg_fa: "SG Fine Aggregate",
+            sg_ca: "SG Coarse Aggregate",
+            abs_fa: "FA Water Absorption",
+            abs_ca: "CA Water Absorption",
+            fm_fa: "FA Surface Moisture",
+            fm_ca: "CA Surface Moisture"
+        };
+
+        // First add user facts (explicitly stated)
+        if (data.facts && data.facts.length > 0) {
+            data.facts.forEach(f => {
+                const label = fieldLabels[f.field] || f.field;
+                let displayVal = f.value;
+                if (typeof displayVal === 'object') displayVal = JSON.stringify(displayVal);
+                rows.push(`
+                    <tr class="hover:bg-slate-50">
+                        <td class="py-2.5 px-3 font-semibold text-slate-800 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            ${label}
+                        </td>
+                        <td class="py-2.5 px-3 font-mono font-bold text-teal-800">${displayVal}</td>
+                        <td class="py-2.5 px-3 text-slate-600">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200 mr-1.5">User Fact</span>
+                            Extracted directly from problem text: <em>"${f.source}"</em>
+                        </td>
+                    </tr>
+                `);
+            });
+        }
+
+        // Then add inferred / default choices with clear engineering reasoning
+        if (data.assumptions && data.assumptions.length > 0) {
+            data.assumptions.forEach(a => {
+                const label = fieldLabels[a.field] || a.field;
+                let displayVal = a.value;
+                if (typeof displayVal === 'object') displayVal = JSON.stringify(displayVal);
+                rows.push(`
+                    <tr class="hover:bg-slate-50">
+                        <td class="py-2.5 px-3 font-semibold text-slate-800 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                            ${label}
+                        </td>
+                        <td class="py-2.5 px-3 font-mono font-bold text-slate-800">${displayVal}</td>
+                        <td class="py-2.5 px-3 text-slate-600">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-amber-50 text-amber-700 font-semibold border border-amber-200 mr-1.5">Engine Choice</span>
+                            ${a.reason}
+                        </td>
+                    </tr>
+                `);
+            });
+        }
+
+        tbodyAudit.innerHTML = rows.join("");
+
+        // Render Steps Table
+        const tbody = document.getElementById("resStepsTable");
+        tbody.innerHTML = res.steps.map(s => `
+            <tr class="hover:bg-slate-50">
+                <td class="py-2.5 px-3 font-semibold text-slate-800">${s.step}</td>
+                <td class="py-2.5 px-3 text-teal-700 font-mono">${s.clause}</td>
+                <td class="py-2.5 px-3 font-mono font-bold">${typeof s.value === 'object' ? JSON.stringify(s.value) : s.value}</td>
+                <td class="py-2.5 px-3 text-slate-500">${s.note || ''}</td>
+            </tr>
+        `).join("");
+
+        // Render Retrieved Benchmark Examples
+        const examplesDiv = document.getElementById("similarExamplesList");
+        if (data.retrieved_examples && data.retrieved_examples.length > 0) {
+            examplesDiv.innerHTML = data.retrieved_examples.map(ex => `
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="font-bold text-slate-800">${ex.external_id} (${ex.grade})</span>
+                        <span class="text-teal-700 font-semibold">Similarity: ${(ex.similarity_score * 100).toFixed(0)}%</span>
+                    </div>
+                    <p class="text-slate-600 line-clamp-2">${ex.problem_statement}</p>
+                    <div class="mt-2 flex gap-4 text-[11px] text-slate-500 font-mono">
+                        <span>w/c: ${ex.mix_per_m3?.w_cm}</span>
+                        <span>Cement: ${ex.mix_per_m3?.cement} kg</span>
+                        <span>Ratio: ${ex.mix_per_m3?.ratio_by_mass_cementitious}</span>
+                        <a href="/examples/${ex.external_id}" class="text-teal-700 hover:underline ml-auto font-sans font-semibold">View Full Solution &rarr;</a>
+                    </div>
+                </div>
+            `).join("");
+        } else {
+            examplesDiv.innerHTML = `<p class="text-xs text-slate-400">No benchmark examples indexed yet.</p>`;
+        }
+    }
+});
+</script>
+{% endblock %}

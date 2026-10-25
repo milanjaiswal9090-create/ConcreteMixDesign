@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}ConcreteMix AI — From Requirements to Code-Verified Concrete Proportions{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-12 pb-20 bg-gradient-to-b from-white via-[#FAFAF8] to-[#FAFAF8] border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-teal-50 text-teal-800 border border-teal-200 mb-6">
+                <span class="w-2 h-2 rounded-full bg-teal-600 animate-pulse"></span>
+                IS 10262:2019 & IS 456:2000 Deterministic Engine
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                From design requirements to <span class="text-teal-700">code-verified</span> concrete mix proportions.
+            </h1>
+            <p class="mt-6 text-lg text-slate-600 leading-relaxed">
+                Enter your structural stipulations in plain English or structured parameters. ConcreteMix AI extracts inputs, cross-checks IS standards, verifies durability constraints, and references 100+ solved engineering cases.
+            </p>
+            <div class="mt-10 flex flex-wrap justify-center gap-4">
+                <a href="/design" class="px-7 py-3.5 rounded-xl font-semibold text-white bg-teal-700 hover:bg-teal-800 shadow-md shadow-teal-700/10 transition text-base">
+                    Design a Mix Now &rarr;
+                </a>
+                <a href="/library" class="px-7 py-3.5 rounded-xl font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 shadow-sm transition text-base">
+                    Explore 100 Solved Problems
+                </a>
+            </div>
+            <div class="mt-8 flex justify-center items-center gap-6 text-xs text-slate-500 font-medium">
+                <span>&bull; Zero LLM Hallucinations</span>
+                <span>&bull; 100% Deterministic Engine</span>
+                <span>&bull; Verified Absolute Volume Checks</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 4-Step Engineering Workflow -->
+<section class="py-20 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-teal-700">Transparent Methodology</h2>
+            <p class="mt-2 text-3xl font-bold tracking-tight text-slate-900">How ConcreteMix AI Works</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="p-6 rounded-2xl bg-[#FAFAF8] border border-slate-200 relative">
+                <div class="text-xs font-bold text-teal-700 mb-2">01. DESCRIBE</div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">State the Problem</h3>
+                <p class="text-sm text-slate-600">Provide natural-language specs (e.g. M30 RCC column in coastal severe exposure) or fill our guided input matrix.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-[#FAFAF8] border border-slate-200 relative">
+                <div class="text-xs font-bold text-teal-700 mb-2">02. CLARIFY</div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Parse & Audit</h3>
+                <p class="text-sm text-slate-600">Distinguishes user-provided facts, safe defaults, and identified missing variables before calculations run.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-[#FAFAF8] border border-slate-200 relative">
+                <div class="text-xs font-bold text-teal-700 mb-2">03. RETRIEVE</div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Hybrid Evidence RAG</h3>
+                <p class="text-sm text-slate-600">Indexes IS code clauses, standard charts, and finds the closest matching worked benchmark problem from the library.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-[#FAFAF8] border border-slate-200 relative">
+                <div class="text-xs font-bold text-teal-700 mb-2">04. COMPUTE</div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">Deterministic Design</h3>
+                <p class="text-sm text-slate-600">Runs IS 10262 steps: target strength, w/c, water adjustments, cement content, and absolute volumes with 8 code checks.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Supported Standards -->
+<section class="py-20 bg-[#FAFAF8]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                <span class="px-2.5 py-1 rounded text-xs font-bold bg-slate-100 text-slate-800 border border-slate-200">Standard Specification</span>
+                <h3 class="text-2xl font-bold text-slate-900 mt-4 mb-3">IS 10262:2019</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Guidelines for concrete mix proportioning. Implements target mean compressive strength (Clause 4.2), water content selection for 10/20/40 mm aggregates, slump corrections (+3% per 25 mm), coarse aggregate volume ratios across Zones I-IV, and SCM handling.
+                </p>
+            </div>
+            <div class="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                <span class="px-2.5 py-1 rounded text-xs font-bold bg-slate-100 text-slate-800 border border-slate-200">Durability Specification</span>
+                <h3 class="text-2xl font-bold text-slate-900 mt-4 mb-3">IS 456:2000 (Table 5)</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    Code of practice for plain and reinforced concrete. Governs maximum free water-cement ratios (0.55 down to 0.40), minimum cementitious contents (up to 360 kg/m³), and minimum concrete grades across Mild, Moderate, Severe, Very Severe, and Extreme environments.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to action -->
+<section class="py-16 bg-teal-800 text-white text-center">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-extrabold tracking-tight">Ready to calculate your mix design?</h2>
+        <p class="mt-4 text-teal-100 max-w-xl mx-auto text-base">
+            Try our interactive mix workbench with step-by-step clause traceability, yield validation, and instant field adjustments.
+        </p>
+        <div class="mt-8">
+            <a href="/design" class="px-8 py-3.5 rounded-xl font-semibold bg-white text-teal-900 hover:bg-teal-50 shadow-lg transition">
+                Open Mix Design Workbench
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

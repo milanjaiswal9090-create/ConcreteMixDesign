@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel & Knowledge Base Ingestion — ConcreteMix AI{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+    <div>
+        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Admin & Knowledge Ingestion</h1>
+        <p class="text-sm text-slate-500 mt-2">Manage solved benchmark problems, ingest IS documents, and rebuild the retrieval index.</p>
+    </div>
+
+    <!-- Admin Key Input -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Administrator Key</label>
+        <div class="flex gap-4">
+            <input type="password" id="adminKey" class="w-full text-sm rounded-xl border border-slate-300 p-3 font-mono" placeholder="Enter ADMIN_KEY (default: change-me-in-production)">
+            <button id="btnCheckStatus" class="px-5 py-3 rounded-xl font-semibold text-white bg-slate-800 hover:bg-slate-900 transition text-sm shrink-0">
+                Verify Status
+            </button>
+        </div>
+    </div>
+
+    <!-- Status Output -->
+    <div id="statusCard" class="hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h2 class="text-base font-bold text-slate-900">System Repository Status</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div class="text-[10px] uppercase font-bold text-slate-400">Solved Problems</div>
+                <div id="statProblems" class="text-2xl font-black text-slate-900 mt-1">-</div>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div class="text-[10px] uppercase font-bold text-slate-400">Documents</div>
+                <div id="statDocs" class="text-2xl font-black text-slate-900 mt-1">-</div>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div class="text-[10px] uppercase font-bold text-slate-400">Indexed Chunks</div>
+                <div id="statChunks" class="text-2xl font-black text-slate-900 mt-1">-</div>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                <div class="text-[10px] uppercase font-bold text-slate-400">DB Size</div>
+                <div id="statDbSize" class="text-2xl font-black text-slate-900 mt-1">-</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bundled Import & Rebuild Controls -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+        <h2 class="text-base font-bold text-slate-900">Knowledge Ingestion Operations</h2>
+        
+        <div class="flex flex-wrap gap-4">
+            <button id="btnImportBundled" class="px-5 py-3 rounded-xl font-semibold text-white bg-teal-700 hover:bg-teal-800 transition text-sm">
+                Import Bundled 100 Mix Problems
+            </button>
+            <button id="btnRebuildIndex" class="px-5 py-3 rounded-xl font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 transition text-sm">
+                Rebuild TF-IDF & BM25 Search Index
+            </button>
+        </div>
+
+        <div id="adminActionOutput" class="hidden p-4 rounded-xl text-xs font-mono bg-slate-50 border border-slate-200 overflow-x-auto"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const adminKey = document.getElementById("adminKey");
+    const btnCheckStatus = document.getElementById("btnCheckStatus");
+    const statusCard = document.getElementById("statusCard");
+    const statProblems = document.getElementById("statProblems");
+    const statDocs = document.getElementById("statDocs");
+    const statChunks = document.getElementById("statChunks");
+    const statDbSize = document.getElementById("statDbSize");
+
+    const btnImportBundled = document.getElementById("btnImportBundled");
+    const btnRebuildIndex = document.getElementById("btnRebuildIndex");
+    const output = document.getElementById("adminActionOutput");
+
+    function getKey() {
+        return adminKey.value.trim() || "change-me-in-production";
+    }
+
+    btnCheckStatus.addEventListener("click", async () => {
+        try {
+            const res = await fetch("/api/admin/status", {
+                headers: { "x-admin-key": getKey() }
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.detail || "Authentication failed");
+
+            statProblems.textContent = data.total_examples;
+            statDocs.textContent = data.total_documents;
+            statChunks.textContent = data.total_chunks;
+            statDbSize.textContent = `${data.database_size_mb} MB`;
+            statusCard.classList.remove("hidden");
+        } catch (err) {
+            alert(err.message);
+        }
+    });
+
+    btnImportBundled.addEventListener("click", async () => {
+        output.classList.remove("hidden");
+        output.textContent = "Importing 100 problems...";
+        try {
+            const res = await fetch("/api/admin/import-bundled-examples", {
+                method: "POST",
+                headers: { "x-admin-key": getKey() }
+            });
+            const data = await res.json();
+            output.textContent = JSON.stringify(data, null, 2);
+            btnCheckStatus.click();
+        } catch (err) {
+            output.textContent = "Error: " + err.message;
+        }
+    });
+
+    btnRebuildIndex.addEventListener("click", async () => {
+        output.classList.remove("hidden");
+        output.textContent = "Rebuilding hybrid retrieval index...";
+        try {
+            const res = await fetch("/api/admin/rebuild-index", {
+                method: "POST",
+                headers: { "x-admin-key": getKey() }
+            });
+            const data = await res.json();
+            output.textContent = JSON.stringify(data, null, 2);
+            btnCheckStatus.click();
+        } catch (err) {
+            output.textContent = "Error: " + err.message;
+        }
+    });
+});
+</script>
+{% endblock %}

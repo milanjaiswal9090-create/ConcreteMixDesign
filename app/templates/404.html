@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found (404) — ConcreteMix AI{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto px-4 py-24 text-center">
+    <div class="w-16 h-16 rounded-2xl bg-teal-50 text-teal-800 flex items-center justify-center font-extrabold text-2xl mx-auto mb-6 border border-teal-200">
+        404
+    </div>
+    <h1 class="text-3xl font-black text-slate-900 tracking-tight">Engineering Page Not Found</h1>
+    <p class="mt-3 text-sm text-slate-500 leading-relaxed">
+        The requested resource, standard document, or mix calculation session does not exist.
+    </p>
+    <div class="mt-8 flex justify-center gap-4">
+        <a href="/" class="px-5 py-2.5 rounded-xl font-semibold text-white bg-teal-700 hover:bg-teal-800 transition text-sm">
+            Return to Overview
+        </a>
+        <a href="/design" class="px-5 py-2.5 rounded-xl font-semibold text-slate-700 bg-white border border-slate-300 hover:bg-slate-50 transition text-sm">
+            Mix Workbench
+        </a>
+    </div>
+</div>
+{% endblock %}

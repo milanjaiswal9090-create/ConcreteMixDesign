@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% block title %}ConcreteMix AI — IS 10262:2019 Concrete Mix Design{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Design code-compliant concrete mixes per IS 10262:2019 with deterministic calculations, smart retrieval from 100+ solved examples, and detailed engineering reports.{% endblock %}">
+
+    {% block og_tags %}
+    <meta property="og:title" content="ConcreteMix AI — Concrete Mix Design">
+    <meta property="og:description" content="From design requirements to code-verified concrete mix proportions. IS 10262:2019 compliant.">
+    <meta property="og:type" content="website">
+    {% endblock %}
+
+    {% block canonical %}{% endblock %}
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧱</text></svg>">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#FAFAF8',
+                            card: '#FFFFFF',
+                            text: '#1E293B',
+                            muted: '#64748B',
+                            accent: '#0F766E',
+                            'accent-hover': '#0D6B63',
+                            link: '#1E40AF',
+                            success: '#15803D',
+                            warning: '#B45309',
+                            error: '#DC2626',
+                            border: '#E2E8F0',
+                            subtle: '#F1F5F9',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'slide-down': 'slideDown 0.3s ease-out',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideDown: {
+                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="bg-brand-bg font-sans text-brand-text antialiased min-h-screen flex flex-col">
+
+    <!-- Skip to main content (a11y) -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-brand-accent focus:text-white focus:px-4 focus:py-2 focus:rounded-lg">
+        Skip to main content
+    </a>
+
+    <!-- ═══════════════════════════════════════════ NAVIGATION ═══════════════════════════════════════════ -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-brand-border transition-shadow duration-300" id="site-header">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-2.5 group" aria-label="ConcreteMix AI Home">
+                    <div class="w-9 h-9 bg-brand-accent rounded-lg flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-lg font-bold text-brand-text leading-tight tracking-tight">ConcreteMix AI</span>
+                        <span class="text-[10px] text-brand-muted leading-tight hidden sm:block">IS 10262:2019 Mix Design</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center gap-1">
+                    <a href="/" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors {% if request.url.path == '/' %}text-brand-accent bg-brand-accent/5{% endif %}">Home</a>
+                    <a href="/design" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors {% if request.url.path == '/design' %}text-brand-accent bg-brand-accent/5{% endif %}">Design</a>
+                    <a href="/library" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors {% if '/library' in request.url.path %}text-brand-accent bg-brand-accent/5{% endif %}">Library</a>
+                    <a href="/methodology" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors {% if request.url.path == '/methodology' %}text-brand-accent bg-brand-accent/5{% endif %}">Methodology</a>
+                    <a href="/docs" class="nav-link px-3 py-2 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors {% if request.url.path == '/docs' %}text-brand-accent bg-brand-accent/5{% endif %}">Docs</a>
+                    <div class="w-px h-6 bg-brand-border mx-2"></div>
+                    <a href="/design" class="inline-flex items-center gap-1.5 px-4 py-2 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-brand-accent-hover shadow-sm hover:shadow-md transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        New Design
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button type="button" class="md:hidden inline-flex items-center justify-center p-2 rounded-lg text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors" id="mobile-menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation menu">
+                    <svg class="w-6 h-6 menu-open-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <svg class="w-6 h-6 menu-close-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="md:hidden hidden animate-slide-down" id="mobile-menu">
+                <div class="px-2 pt-2 pb-4 space-y-1 border-t border-brand-border">
+                    <a href="/" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors">Home</a>
+                    <a href="/design" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors">Design</a>
+                    <a href="/library" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors">Library</a>
+                    <a href="/methodology" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors">Methodology</a>
+                    <a href="/docs" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-brand-muted hover:text-brand-text hover:bg-brand-subtle transition-colors">Docs</a>
+                    <div class="pt-2">
+                        <a href="/design" class="block w-full text-center px-4 py-2.5 bg-brand-accent text-white text-sm font-semibold rounded-lg hover:bg-brand-accent-hover transition-colors">
+                            New Design
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ═══════════════════════════════════════════ FLASH MESSAGES ═══════════════════════════════════════════ -->
+    {% if messages %}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 space-y-3" role="alert" aria-live="polite">
+        {% for category, message in messages %}
+        <div class="flash-message flex items-center gap-3 px-4 py-3 rounded-lg border animate-slide-down
+            {% if category == 'success' %}bg-green-50 border-green-200 text-green-800
+            {% elif category == 'warning' %}bg-amber-50 border-amber-200 text-amber-800
+            {% elif category == 'error' or category == 'danger' %}bg-red-50 border-red-200 text-red-800
+            {% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %}">
+            {% if category == 'success' %}
+            <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            {% elif category == 'warning' %}
+            <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+            {% elif category == 'error' or category == 'danger' %}
+            <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/></svg>
+            {% else %}
+            <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+            {% endif %}
+            <p class="text-sm font-medium flex-1">{{ message }}</p>
+            <button type="button" class="flex-shrink-0 p-1 rounded hover:bg-black/5 transition-colors" onclick="this.closest('.flash-message').remove()" aria-label="Dismiss">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ═══════════════════════════════════════════ MAIN CONTENT ═══════════════════════════════════════════ -->
+    <main id="main-content" class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- ═══════════════════════════════════════════ FOOTER ═══════════════════════════════════════════ -->
+    <footer class="bg-white border-t border-brand-border mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-2.5 mb-4">
+                        <div class="w-8 h-8 bg-brand-accent rounded-lg flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                            </svg>
+                        </div>
+                        <span class="text-base font-bold text-brand-text">ConcreteMix AI</span>
+                    </div>
+                    <p class="text-sm text-brand-muted leading-relaxed">
+                        Deterministic concrete mix design calculations per IS 10262:2019.
+                        No hallucinations — just verified engineering.
+                    </p>
+                </div>
+
+                <!-- Navigation -->
+                <div>
+                    <h3 class="text-xs font-semibold text-brand-text uppercase tracking-wider mb-4">Navigation</h3>
+                    <ul class="space-y-2.5">
+                        <li><a href="/" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">Home</a></li>
+                        <li><a href="/design" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">Design a Mix</a></li>
+                        <li><a href="/library" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">Example Library</a></li>
+                        <li><a href="/methodology" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">Methodology</a></li>
+                        <li><a href="/docs" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">Documentation</a></li>
+                    </ul>
+                </div>
+
+                <!-- About -->
+                <div>
+                    <h3 class="text-xs font-semibold text-brand-text uppercase tracking-wider mb-4">About</h3>
+                    <ul class="space-y-2.5">
+                        <li><a href="/methodology" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">How It Works</a></li>
+                        <li><a href="/methodology#philosophy" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">Engineering Philosophy</a></li>
+                        <li><a href="/methodology#limitations" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">Known Limitations</a></li>
+                        <li><a href="/docs#api" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">API Reference</a></li>
+                    </ul>
+                </div>
+
+                <!-- Standards -->
+                <div>
+                    <h3 class="text-xs font-semibold text-brand-text uppercase tracking-wider mb-4">Standards</h3>
+                    <ul class="space-y-2.5">
+                        <li><a href="/seo/concrete-mix-design-is-10262" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">IS 10262:2019</a></li>
+                        <li><a href="/seo/target-mean-strength-calculation" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">Target Mean Strength</a></li>
+                        <li><a href="/seo/water-cement-ratio-selection" class="text-sm text-brand-muted hover:text-brand-accent transition-colors">Water-Cement Ratio</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-10 pt-8 border-t border-brand-border flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-brand-muted">
+                    &copy; {{ now.year if now is defined else "2024" }} ConcreteMix AI. For educational and professional reference only.
+                </p>
+                <p class="text-xs text-brand-muted">
+                    Not a substitute for professional engineering judgment.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════ BACK TO TOP ═══════════════════════════════════════════ -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 z-40 w-10 h-10 bg-brand-accent text-white rounded-full shadow-lg opacity-0 pointer-events-none transition-all duration-300 hover:bg-brand-accent-hover hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2" aria-label="Back to top">
+        <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+    </button>
+
+    <!-- ═══════════════════════════════════════════ BASE SCRIPTS ═══════════════════════════════════════════ -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', !isOpen);
+                mobileMenuBtn.querySelector('.menu-open-icon').classList.toggle('hidden', !isOpen);
+                mobileMenuBtn.querySelector('.menu-close-icon').classList.toggle('hidden', isOpen);
+            });
+        }
+
+        // Header shadow on scroll
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-sm');
+            } else {
+                header.classList.remove('shadow-sm');
+            }
+        }, { passive: true });
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                backToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                backToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+            }
+        }, { passive: true });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Auto-dismiss flash messages
+        document.querySelectorAll('.flash-message').forEach(msg => {
+            setTimeout(() => {
+                msg.style.transition = 'opacity 0.3s, transform 0.3s';
+                msg.style.opacity = '0';
+                msg.style.transform = 'translateY(-10px)';
+                setTimeout(() => msg.remove(), 300);
+            }, 8000);
+        });
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>
